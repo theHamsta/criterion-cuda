@@ -49,7 +49,7 @@ Found 15 outliers among 100 measurements (15.00%)
   4 (4.00%) high severe
 ```
 
-## Making an optimization
+## Making an Optimization
 
 Now change the following line in the example
 
