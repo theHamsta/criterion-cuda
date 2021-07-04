@@ -7,7 +7,7 @@ edition = "2018"
 
 [dependencies]
 #criterion = {version="0.3.4", features = ["html_reports"]}
-criterion = "0.3.4"
+criterion = "0.3"
 rustacuda = { git = "https://github.com/theHamsta/RustaCUDA.git", branch = "null-stream" }
 rustacuda_derive = "0.1"
 rustacuda_core = "0.1"
