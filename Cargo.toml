@@ -12,6 +12,6 @@ rustacuda_derive = "0.1"
 rustacuda_core = "0.1"
 
 [[bench]]
-path = "src/lib.rs"
+path = "examples/add.rs"
 name = "cuda_bench"
 harness = false
