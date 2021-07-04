@@ -81,3 +81,8 @@ Found 12 outliers among 100 measurements (12.00%)
   4 (4.00%) high mild
   8 (8.00%) high severe
 ```
+
+# Troubleshooting
+
+This project uses [RustaCUDA](https://github.com/bheisler/RustaCUDA) for running CUDA programs.
+Please refer to their README in case of any build problems!
