@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion, Throughput};
 use criterion_cuda::CudaTime;
 use std::ffi::CString;
 
@@ -26,6 +26,7 @@ pub fn cuda_bench(c: &mut Criterion<CudaTime>) {
             DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
 
         for i in [SMALL, BIG] {
+            group.throughput(Throughput::Bytes(i as u64 * 4));
             group.bench_function(BenchmarkId::new("add kernel", i), |b| {
                 b.iter(|| {
                     launch!(module.sum<<<i, 1, 0, stream>>>(
