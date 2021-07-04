@@ -26,17 +26,17 @@ pub fn cuda_bench(c: &mut Criterion<CudaTime>) {
         let mut result =
             DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
 
-        for i in [SMALL, BIG] {
-            group.throughput(Throughput::Bytes(i as u64 * 4));
-            group.bench_function(BenchmarkId::new("add kernel", i), |b| {
+        for buffer_size in [SMALL, BIG] {
+            group.throughput(Throughput::Bytes(buffer_size as u64 * 4));
+            group.bench_function(BenchmarkId::new("add kernel", buffer_size), |b| {
                 b.iter(|| {
-                    launch!(module.sum<<<i, 1, 0, stream>>>(
+                    launch!(module.sum<<<buffer_size, 1, 0, stream>>>(
                     //// Try this change!
                     //launch!(module.sum<<<256, ((i + 256 - 1) / 256), 0, stream>>>(
                         x.as_device_ptr(),
                         y.as_device_ptr(),
                         result.as_device_ptr(),
-                        i
+                        buffer_size
                     ))
                     .expect("Failed to launch CUDA kernel")
                 });
