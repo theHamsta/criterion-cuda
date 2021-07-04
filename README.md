@@ -5,6 +5,11 @@ This crate provides the `Measurement` `CudaTime` for benchmarking CUDA kernels u
 
 See [example/add.rs](example/add.rs) for a usage example.
 
+# How is the CUDA time measured?
+
+The time of GPU execution is measured by recording a CUDA event before and after your benchmark
+on the CUDA default stream.
+
 # Running the Example Benchmark
 
 ```bash
