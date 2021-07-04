@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use criterion::{
     measurement::{Measurement, ValueFormatter},
     Throughput,
