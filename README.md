@@ -3,7 +3,7 @@
 This crate provides the `Measurement` `CudaTime` for benchmarking CUDA kernels using
 [criterion-rs](https://github.com/bheisler/criterion.rs).
 
-See [example/add.rs](example/add.rs) for a usage example.
+See [examples/add.rs](https://github.com/theHamsta/criterion-cuda/blob/master/examples/add.rs) for a usage example.
 
 ## How is the CUDA time measured?
 
