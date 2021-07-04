@@ -18,7 +18,7 @@ impl Measurement for CudaTime {
             .expect("Failed to create event");
         event
             .record(&Stream::null())
-            .expect("could not record stream");
+            .expect("Could not record CUDA event");
         event
     }
 
@@ -27,7 +27,7 @@ impl Measurement for CudaTime {
             .expect("Failed to create event");
         end_event
             .record(&Stream::null())
-            .expect("could not record stream");
+            .expect("Could not record CUDA event");
         end_event.synchronize().expect("Failed to synchronize");
         end_event
             .elapsed_time_f32(&start_event)
