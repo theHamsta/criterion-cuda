@@ -1,6 +1,6 @@
 # criterion-cuda
 
-This crate provides the `Measurement` `CudaTime` for bench marking CUDA kernels using
+This crate provides the `Measurement` `CudaTime` for benchmarking CUDA kernels using
 [criterion-rs](https://github.com/bheisler/criterion.rs).
 
 See [example/add.rs](example/add.rs) for a usage example.
