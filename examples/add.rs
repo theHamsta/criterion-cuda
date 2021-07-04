@@ -7,6 +7,7 @@ use rustacuda::{
     launch, memory::DeviceBuffer, module::Module, stream::Stream, stream::StreamFlags,
 };
 
+/// Profiles a simple element-wise addition kernel
 pub fn cuda_bench(c: &mut Criterion<CudaTime>) {
     let _ctx = rustacuda::quick_init().expect("could not create CUDA context");
 
