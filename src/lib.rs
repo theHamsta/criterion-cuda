@@ -72,24 +72,19 @@ impl ValueFormatter for CudaTimeFormatter {
         "ms"
     }
 
+    /// TODO!
     fn scale_throughputs(
         &self,
         _typical_value: f64,
         throughput: &Throughput,
-        values: &mut [f64],
+        _values: &mut [f64],
     ) -> &'static str {
         match throughput {
-            Throughput::Bytes(n) => {
-                for val in values {
-                    *val /= *n as f64;
-                }
-                "cpb"
+            Throughput::Bytes(_) => {
+                "GiB/s"
             }
-            Throughput::Elements(n) => {
-                for val in values {
-                    *val /= *n as f64;
-                }
-                "c/e"
+            Throughput::Elements(_) => {
+                "elements/s"
             }
         }
     }
