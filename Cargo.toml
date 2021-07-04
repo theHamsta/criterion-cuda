@@ -1,0 +1,17 @@
+[package]
+name = "criterion-cuda"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+criterion = "0.3.4"
+rustacuda = { git = "https://github.com/theHamsta/RustaCUDA.git", branch = "null-stream" }
+rustacuda_derive = "0.1"
+rustacuda_core = "0.1"
+
+[[bench]]
+path = "src/lib.rs"
+name = "cuda_bench"
+harness = false
