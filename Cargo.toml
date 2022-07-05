@@ -1,16 +1,20 @@
 [package]
 name = "criterion-cuda"
-version = "0.1.0"
-edition = "2018"
+version = "0.2.0"
+edition = "2021"
+description = "CUDA benchmarking for criterion"
+license = "MIT OR Apache-2.0"
+authors = ["stephan.seitz@fau.de"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 #criterion = "0.3"
-criterion = {version="0.3.4", features = ["html_reports"]}
-rustacuda = { git = "https://github.com/theHamsta/RustaCUDA.git", branch = "null-stream" }
-rustacuda_derive = "0.1"
-rustacuda_core = "0.1"
+criterion = {version="0.3.5", features = ["html_reports"]}
+cust = "0.3"
+cust_derive = "0.2"
+cust_core = "0.1"
+once_cell = "1.13"
 
 [[bench]]
 path = "examples/add.rs"

@@ -4,29 +4,34 @@ use criterion::{
     measurement::{Measurement, ValueFormatter},
     Throughput,
 };
-use rustacuda::prelude::Stream;
+use cust::prelude::{Stream, StreamFlags};
+use once_cell::sync::Lazy;
 
 /// `CudaTime` measures the time of one or multiple CUDA kernels via CUDA events
 pub struct CudaTime;
 
+pub static MEASUREMENT_STREAM: Lazy<Stream> = Lazy::new(|| {
+    Stream::new(StreamFlags::DEFAULT, None).unwrap()
+});
+
 impl Measurement for CudaTime {
-    type Intermediate = rustacuda::event::Event;
+    type Intermediate = cust::event::Event;
     type Value = f32;
 
     fn start(&self) -> Self::Intermediate {
-        let event = rustacuda::event::Event::new(rustacuda::event::EventFlags::DEFAULT)
+        let event = cust::event::Event::new(cust::event::EventFlags::DEFAULT)
             .expect("Failed to create event");
         event
-            .record(&Stream::null())
+            .record(&MEASUREMENT_STREAM)
             .expect("Could not record CUDA event");
         event
     }
 
     fn end(&self, start_event: Self::Intermediate) -> Self::Value {
-        let end_event = rustacuda::event::Event::new(rustacuda::event::EventFlags::DEFAULT)
+        let end_event = cust::event::Event::new(cust::event::EventFlags::DEFAULT)
             .expect("Failed to create event");
         end_event
-            .record(&Stream::null())
+            .record(&MEASUREMENT_STREAM)
             .expect("Could not record CUDA event");
         end_event.synchronize().expect("Failed to synchronize");
         end_event
@@ -98,6 +103,6 @@ impl ValueFormatter for CudaTimeFormatter {
 mod tests {
     #[test]
     fn init_cuda_test() {
-        let _ctx = rustacuda::quick_init().expect("could not create CUDA context");
+        let _ctx = cust::quick_init().expect("could not create CUDA context");
     }
 }
