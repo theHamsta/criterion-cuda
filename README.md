@@ -1,4 +1,4 @@
-# criterion-cuda
+# criterion-cust
 
 This crate provides the `Measurement` `CudaTime` for benchmarking CUDA kernels using
 [criterion-rs](https://github.com/bheisler/criterion.rs).
@@ -54,8 +54,8 @@ Found 15 outliers among 100 measurements (15.00%)
 Now change the following line in the example
 
 ```diff
-- launch!(module.sum<<<i, 1, 0, stream>>>(
-+ launch!(module.sum<<<256, ((i + 256 - 1) / 256), 0, stream>>>(
+- launch!(module.sum<<<buffer_size, 1, 0, stream>>>(
++ launch!(module.sum<<<256, ((buffer_size + 256 - 1) / 256), 0, stream>>>(
 ```
 
 Now the benchmark should run faster:
@@ -84,5 +84,6 @@ Found 12 outliers among 100 measurements (12.00%)
 
 # Troubleshooting
 
-This project uses [RustaCUDA](https://github.com/bheisler/RustaCUDA) for running CUDA programs.
+This project uses [cust](https://github.com/Rust-GPU/Rust-CUDA/tree/master/crates/cust) for running CUDA programs.
 Please refer to their README in case of any build problems!
+Use the "0.1.0" version of this crate to use [RustaCUDA](https://github.com/bheisler/RustaCUDA).
