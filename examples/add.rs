@@ -16,15 +16,15 @@ pub fn cuda_bench(c: &mut Criterion<CudaTime>) {
     const SMALL: u32 = 2_000;
     const BIG: u32 = 20_000;
 
-    unsafe {
-        let x = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
-        let y = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
-        let result = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
+    let x = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
+    let y = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
+    let result = DeviceBuffer::<f32>::zeroed(BIG as usize).expect("Failed to allocate buffer");
 
-        for buffer_size in [SMALL, BIG] {
-            group.throughput(Throughput::Bytes(buffer_size as u64 * 4));
-            group.bench_function(BenchmarkId::new("add kernel", buffer_size), |b| {
-                b.iter(|| {
+    for buffer_size in [SMALL, BIG] {
+        group.throughput(Throughput::Bytes(buffer_size as u64 * 4));
+        group.bench_function(BenchmarkId::new("add kernel", buffer_size), |b| {
+            b.iter(|| {
+                unsafe {
                     //launch!(module.sum<<<buffer_size, 1, 0, stream>>>(
                     //// Try this change!
                     launch!(module.sum<<<256, ((buffer_size + 256 - 1) / 256), 0, stream>>>(
@@ -33,10 +33,10 @@ pub fn cuda_bench(c: &mut Criterion<CudaTime>) {
                         result.as_device_ptr(),
                         buffer_size
                     ))
-                    .expect("Failed to launch CUDA kernel")
-                });
+                }
+                .expect("Failed to launch CUDA kernel")
             });
-        }
+        });
     }
 
     group.finish()

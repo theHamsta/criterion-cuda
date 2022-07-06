@@ -10,9 +10,8 @@ use once_cell::sync::Lazy;
 /// `CudaTime` measures the time of one or multiple CUDA kernels via CUDA events
 pub struct CudaTime;
 
-pub static MEASUREMENT_STREAM: Lazy<Stream> = Lazy::new(|| {
-    Stream::new(StreamFlags::DEFAULT, None).unwrap()
-});
+pub static MEASUREMENT_STREAM: Lazy<Stream> =
+    Lazy::new(|| Stream::new(StreamFlags::DEFAULT, None).unwrap());
 
 impl Measurement for CudaTime {
     type Intermediate = cust::event::Event;
@@ -85,12 +84,8 @@ impl ValueFormatter for CudaTimeFormatter {
         _values: &mut [f64],
     ) -> &'static str {
         match throughput {
-            Throughput::Bytes(_) => {
-                "GiB/s"
-            }
-            Throughput::Elements(_) => {
-                "elements/s"
-            }
+            Throughput::Bytes(_) => "GiB/s",
+            Throughput::Elements(_) => "elements/s",
         }
     }
 
